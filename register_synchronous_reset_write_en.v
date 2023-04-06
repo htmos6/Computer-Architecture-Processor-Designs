@@ -14,6 +14,11 @@ module register_synchronous_reset_write_en #(parameter W = 4)
 			else if (reset_synchronous == 0 && write_enable == 1)
 				out_reg <= inp_reg; // Load output at the next clock cycle with parallel input
 		end
+		
+	always @(*)
+		begin
+			out_reg = out_reg;		
+		end
 	
 endmodule
 
