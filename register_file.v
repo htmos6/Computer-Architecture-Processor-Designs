@@ -7,8 +7,8 @@ module register_file #(parameter W = 16)
     input [3:0] inp_read_address1, 
     input [3:0] inp_write_address0, 
     input [W-1:0] inp_write_data, 
-    output reg [W-1:0] out_read_data0,
-    output reg [W-1:0] out_read_data1 
+    output [W-1:0] out_read_data0,
+    output [W-1:0] out_read_data1 
     );	
 
     // wire clk = clk;
@@ -44,8 +44,8 @@ module register_file #(parameter W = 16)
     wire [W-1:0] out_R15;
 
 
-    wire [W-1:0] out_16to1_MUX_RD0;
-    wire [W-1:0] out_16to1_MUX_RD1;
+    // wire [W-1:0] out_16to1_MUX_RD0;
+    // wire [W-1:0] out_16to1_MUX_RD1;
 
 
     // decoder4to16 register_RD0_select(.inp_dec(inp_dec0_wire), .out_dec(out_dec0_wire)); // 4-bit decoder input 0 & 16-bit decoder output
@@ -76,7 +76,7 @@ module register_file #(parameter W = 16)
                                     .inp_mux8(out_R8), .inp_mux9(out_R9), .inp_mux10(out_R10), .inp_mux11(out_R11), 
                                     .inp_mux12(out_R12), .inp_mux13(out_R13), .inp_mux14(out_R14), .inp_mux15(out_R15),
                                     .select(inp_dec0_wire), 
-                                    .out_mux(out_16to1_MUX_RD0)
+                                    .out_mux(out_read_data0)
                                    );
 
     multiplexer16to1 #(.W(W)) read_1_select (
@@ -85,15 +85,7 @@ module register_file #(parameter W = 16)
                                     .inp_mux8(out_R8), .inp_mux9(out_R9), .inp_mux10(out_R10), .inp_mux11(out_R11), 
                                     .inp_mux12(out_R12), .inp_mux13(out_R13), .inp_mux14(out_R14), .inp_mux15(out_R15),
                                     .select(inp_dec1_wire), 
-                                    .out_mux(out_16to1_MUX_RD1)
+                                    .out_mux(out_read_data1)
                                    );
-
-	 always @(inp_read_address0 or inp_read_address1) // Sequential Logic
-		 begin
-			 out_read_data0 = out_16to1_MUX_RD0;
-			 out_read_data1 = out_16to1_MUX_RD1;
-		 end
-
-
 endmodule
 
