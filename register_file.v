@@ -1,7 +1,7 @@
 module register_file #(parameter W = 16) 
     (
     input clk, 
-    input >, 
+    input write_enable, 
     input reset_synchronous,
     input [3:0] inp_read_address0, 
     input [3:0] inp_read_address1, 
