@@ -15,3 +15,4 @@ module register_synchronous_reset #(parameter W = 4)
 		end
 		
 endmodule
+	

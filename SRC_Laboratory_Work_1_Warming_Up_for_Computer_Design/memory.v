@@ -1,6 +1,13 @@
-module memory #(parameter W = 4, Addr_W = 8)(input clk, input [Addr_W-1:0] inp_address, input [8*W-1:0] inp_data, input write_enable, output reg [8*W-1:0] out_read_data);
+module memory #(parameter W = 4, Addr_W = 8)
+				(
+					input clk, 
+					input [Addr_W-1:0] inp_address, 
+					input [8*W-1:0] inp_data,
+					input write_enable, 
+					output reg [8*W-1:0] out_read_data
+				);
 
-	reg [7:0] memory_arr [20:0]; // little endian 2^32-1 is the array size 
+	reg [7:0] memory_arr [300:0]; // little endian 2^32-1 is the array size 
 	reg [4:0] i;
 	
 	initial 
@@ -14,7 +21,7 @@ module memory #(parameter W = 4, Addr_W = 8)(input clk, input [Addr_W-1:0] inp_a
 				begin
 					for (i = 0; i < W; i = i+1)
 						begin
-							memory_arr[inp_address+i] <= inp_data[i*8 +: 8];
+							memory_arr[inp_address+i] = inp_data[i*8 +: 8];
 						end
 				end
 			end

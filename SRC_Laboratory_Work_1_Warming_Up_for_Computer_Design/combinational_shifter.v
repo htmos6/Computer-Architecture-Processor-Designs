@@ -16,6 +16,7 @@ module combinational_shifter #(parameter W = 8)(input signed [W-1:0] inp_shifter
 						temp_R_shift = inp_shifter >> shamt;
 						temp_L_shift = inp_shifter << (W-shamt);
 						temp_shift = temp_R_shift + temp_L_shift;
+						out_shifter = (inp_shifter >> shamt) + (inp_shifter << (W-shamt));
 					end
 			endcase
 		end

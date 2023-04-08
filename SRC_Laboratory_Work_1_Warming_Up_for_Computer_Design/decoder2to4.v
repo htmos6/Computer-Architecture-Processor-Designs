@@ -11,7 +11,3 @@ module decoder2to4(input [1:0] inp_dec, output reg [3:0] out_dec);
 	end
 
 endmodule
-
-
-
-
