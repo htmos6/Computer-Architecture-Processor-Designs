@@ -51,7 +51,14 @@ async def memory(dut):
     await Timer(1, units="us")
     assert dut.out_read_data.value == 256053 # checks that sync reset is a sequential
 
-    
 
-    
-  
+    # Test writing to the memory with random input values
+    for i in range(10):
+        address = random.randint(0, 255)
+        data = random.randint(0, 65535)
+        dut.write_enable.value = 1
+        dut.inp_address.value = address
+        dut.inp_data = data
+        await clkedge
+        await Timer(1, units="us")
+        assert dut.out_read_data.value == data 
