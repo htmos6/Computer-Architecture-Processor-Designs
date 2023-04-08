@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1680974007" />
+    <testcase name="memory" classname="memory" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\MemoryTest\tests\memory.py" lineno="11" time="0.0009980201721191406" sim_time_ns="29000" ratio_time="29057528.905876733" />
+  </testsuite>
+</testsuites>

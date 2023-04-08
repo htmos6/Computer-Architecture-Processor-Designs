@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1680971503" />
-    <testcase name="register_synchronous_reset" classname="register_synchronous_reset_write_en" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\RegisterSynchronousResetWriteEnable\tests\register_synchronous_reset_write_en.py" lineno="11" time="0.004985809326171875" sim_time_ns="51000" ratio_time="10229031.369548585" />
+    <property name="random_seed" value="1680972344" />
+    <testcase name="register_synchronous_reset" classname="register_synchronous_reset_write_en" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\RegisterSynchronousResetWriteEnable\tests\register_synchronous_reset_write_en.py" lineno="11" time="0.0029861927032470703" sim_time_ns="51000" ratio_time="17078603.113772456" />
   </testsuite>
 </testsuites>
