@@ -1,4 +1,4 @@
-module combinational_shifter #(parameter W = 4)(input [W-1:0] inp_shifter, input [4:0] shamt, input [1:0] control, output reg [W-1:0] out_shifter);
+module combinational_shifter #(parameter W = 4)(input signed [W-1:0] inp_shifter, input [4:0] shamt, input [1:0] control, output reg [W-1:0] out_shifter);
 	
 	reg [W-1:0] temp_shift;
 	reg [W-1:0] temp_R_shift;
