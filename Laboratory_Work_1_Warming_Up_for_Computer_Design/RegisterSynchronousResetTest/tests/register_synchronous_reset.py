@@ -12,14 +12,16 @@ from cocotb.binary import BinaryValue
 async def register_synchronous_reset(dut):
     #Generate the clock
     await cocotb.start(Clock(dut.clk, 10, 'us').start(start_high=False))
-    clkedge = FallingEdge(dut.clk)
+    clkedge = RisingEdge(dut.clk)
     await clkedge # wait until posedge
+    await Timer(1, units="us")
 
     #OUTPUT OF THE REGISTER IS EMPTY LOAD WITH A VALUE
     dut.reset_synchronous.value = 0
     inp_value = 10
     dut.inp_reg.value = inp_value
     await clkedge # wait until posedge
+    await Timer(1, units="us")
     assert dut.out_reg.value == inp_value #check if the module added the values correctly
 
 
@@ -28,6 +30,7 @@ async def register_synchronous_reset(dut):
     await Timer(1, units="us")
     assert dut.out_reg.value != 0 # checks that sync reset is not a combinational
     await clkedge # wait until posedge
+    await Timer(1, units="us")
     assert dut.out_reg.value == 0 # checks that sync reset is a sequential
 
 
@@ -38,6 +41,7 @@ async def register_synchronous_reset(dut):
     await Timer(1, units="us")
     assert dut.out_reg.value != inp_value # check
     await clkedge # wait until posedge
+    await Timer(1, units="us")
     assert dut.out_reg.value == inp_value # check if the module added the values correctly
 
 
@@ -47,4 +51,5 @@ async def register_synchronous_reset(dut):
     assert dut.out_reg.value != inp_value_new #check
     assert dut.out_reg.value == inp_value #check
     await clkedge # wait until posedge
+    await Timer(1, units="us")
     assert dut.out_reg.value == inp_value_new #check if the module added the values correctly
