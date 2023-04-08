@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1680965472" />
+    <testcase name="register_synchronous_reset" classname="register_synchronous_reset" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\RegisterSynchronousReset\tests\register_synchronous_reset.py" lineno="11" time="0.001995563507080078" sim_time_ns="41000" ratio_time="20545575.14934289" />
+  </testsuite>
+</testsuites>
