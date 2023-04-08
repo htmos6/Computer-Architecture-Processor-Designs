@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1680882946" />
+    <testcase name="constant_value_generator_test" classname="multiplexer4to1" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Laboratory_Work_1_Warming_Up_for_Computer_Design\Multiplexer4to1\tests\multiplexer4to1.py" lineno="5" time="0.016116857528686523" sim_time_ns="256000" ratio_time="15883989.763162177" />
+  </testsuite>
+</testsuites>

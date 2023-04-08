@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1680876532" />
+    <testcase name="decoder4to16" classname="decoder4to16" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Laboratory_Work_1_Warming_Up_for_Computer_Design\Decoder4to16Test\tests\decoder4to16.py" lineno="4" time="0.0010404586791992188" sim_time_ns="17000" ratio_time="16338947.754353805" />
+  </testsuite>
+</testsuites>

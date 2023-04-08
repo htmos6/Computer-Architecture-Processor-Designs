@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1680877420" />
+    <testcase name="multiplexer2to1" classname="multiplexer2to1" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Laboratory_Work_1_Warming_Up_for_Computer_Design\Multiplexer2to1\tests\multiplexer2to1.py" lineno="4" time="0.0" sim_time_ns="3000" ratio_time="inf" />
+  </testsuite>
+</testsuites>
