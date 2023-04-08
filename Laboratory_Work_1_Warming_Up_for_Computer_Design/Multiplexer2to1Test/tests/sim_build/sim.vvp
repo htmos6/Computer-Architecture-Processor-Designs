@@ -1,0 +1,58 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 6;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2009.vpi";
+S_000002522bba6520 .scope package, "$unit" "$unit" 2 1;
+ .timescale -6 -6;
+S_000002522bba66b0 .scope module, "multiplexer2to1" "multiplexer2to1" 3 1;
+ .timescale -6 -6;
+    .port_info 0 /INPUT 4 "inp_mux0";
+    .port_info 1 /INPUT 4 "inp_mux1";
+    .port_info 2 /INPUT 1 "select";
+    .port_info 3 /OUTPUT 4 "out_mux";
+P_000002522bba8c90 .param/l "W" 0 3 1, +C4<00000000000000000000000000000100>;
+o000002522bbf6fa8 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v000002522bbaab00_0 .net "inp_mux0", 3 0, o000002522bbf6fa8;  0 drivers
+o000002522bbf6fd8 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v000002522bbae000_0 .net "inp_mux1", 3 0, o000002522bbf6fd8;  0 drivers
+v000002522bbae0a0_0 .var "out_mux", 3 0;
+o000002522bbf7038 .functor BUFZ 1, C4<z>; HiZ drive
+v000002522bbae140_0 .net "select", 0 0, o000002522bbf7038;  0 drivers
+E_000002522bba8a50 .event anyedge, v000002522bbae140_0, v000002522bbaab00_0, v000002522bbae000_0;
+    .scope S_000002522bba66b0;
+T_0 ;
+    %wait E_000002522bba8a50;
+    %load/vec4 v000002522bbae140_0;
+    %dup/vec4;
+    %pushi/vec4 0, 0, 1;
+    %cmp/u;
+    %jmp/1 T_0.0, 6;
+    %dup/vec4;
+    %pushi/vec4 1, 0, 1;
+    %cmp/u;
+    %jmp/1 T_0.1, 6;
+    %jmp T_0.2;
+T_0.0 ;
+    %load/vec4 v000002522bbaab00_0;
+    %store/vec4 v000002522bbae0a0_0, 0, 4;
+    %jmp T_0.2;
+T_0.1 ;
+    %load/vec4 v000002522bbae000_0;
+    %store/vec4 v000002522bbae0a0_0, 0, 4;
+    %jmp T_0.2;
+T_0.2 ;
+    %pop/vec4 1;
+    %jmp T_0;
+    .thread T_0, $push;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "-";
+    "C:/Users/Legion/Desktop/Quartus/EE446-LABORATORY/Computer-Architecture-Verilog/Laboratory_Work_1_Warming_Up_for_Computer_Design/Multiplexer2to1Test/tests/../hdl/multiplexer2to1.v";
