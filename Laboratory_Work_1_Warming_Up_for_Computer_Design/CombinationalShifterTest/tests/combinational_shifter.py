@@ -11,7 +11,7 @@ async def combinational_shifter(dut):
     dut.control.value = 0
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b1010
+    assert dut.out_shifter.value == 10
 
 
 
@@ -20,7 +20,7 @@ async def combinational_shifter(dut):
     dut.control.value = 0
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b0100
+    assert dut.out_shifter.value == 20
      
 
 
@@ -29,7 +29,7 @@ async def combinational_shifter(dut):
     dut.control.value = 0
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b1000
+    assert dut.out_shifter.value == 40
 
 
 
@@ -38,7 +38,7 @@ async def combinational_shifter(dut):
     dut.control.value = 0
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b0000
+    assert dut.out_shifter.value == 16
     ### LOGIC LEFT SHIFT TEST END
 
 
@@ -49,7 +49,7 @@ async def combinational_shifter(dut):
     dut.control.value = 1
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b0010
+    assert dut.out_shifter.value == 2
 
 
 
@@ -58,7 +58,7 @@ async def combinational_shifter(dut):
     dut.control.value = 1
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b0001
+    assert dut.out_shifter.value == 1
      
 
 
@@ -67,7 +67,7 @@ async def combinational_shifter(dut):
     dut.control.value = 1
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b0000
+    assert dut.out_shifter.value == 0
 
 
 
@@ -76,47 +76,81 @@ async def combinational_shifter(dut):
     dut.control.value = 1
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value == 0b0000
+    assert dut.out_shifter.value == 0
     ### LOGIC RIGHT SHIFT TEST END
 
 
     ### ARITHMETIC RIGHT SHIFT TEST START
-    dut.inp_shifter.value = 0b1101
+    dut.inp_shifter.value = -6
     dut.shamt.value = 1
     dut.control.value = 2
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value.signed_integer == 0b1110
+    assert dut.out_shifter.value.signed_integer == -3 # 1110
 
 
 
-    dut.inp_shifter.value = 0b1010
+    dut.inp_shifter.value = -15
     dut.shamt.value = 2
-    dut.control.value = 3
+    dut.control.value = 2
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value.signed_integer == 0b1101
+    assert dut.out_shifter.value.signed_integer == -4 # 1110
      
 
 
     dut.inp_shifter.value = 0b0101
     dut.shamt.value = 3
-    dut.control.value = 4
+    dut.control.value = 2
 
     await Timer(1, units="us")
-    assert dut.out_shifter.value.signed_integer == 0b1010
+    assert dut.out_shifter.value.signed_integer == 0
 
 
 
     dut.inp_shifter.value = 0b0001
     dut.shamt.value = 4
-    dut.control.value = 1
+    dut.control.value = 2
 
     await Timer(1, units="us")
     assert dut.out_shifter.value.signed_integer == 0b0000
     ### ARITHMETIC RIGHT SHIFT TEST END
 
 
+    ### ROTATE RIGHT SHIFT TEST START
+
+    dut.inp_shifter.value = -6
+    dut.shamt.value = 1
+    dut.control.value = 3
+
+    await Timer(1, units="us")
+    assert dut.out_shifter.value.signed_integer == 125 # 1110
+
+
+    dut.inp_shifter.value = -15 # 11110001
+    dut.shamt.value = 2
+    dut.control.value = 3
+
+    await Timer(1, units="us")
+    assert dut.out_shifter.value.signed_integer == 124# 01111100
+
+
+    dut.inp_shifter.value = 0b0101
+    dut.shamt.value = 3
+    dut.control.value = 3
+
+    await Timer(1, units="us")
+    assert dut.out_shifter.value.signed_integer == -96
+
+
+
+    dut.inp_shifter.value = 0b0001
+    dut.shamt.value = 4
+    dut.control.value = 3
+
+    await Timer(1, units="us")
+    assert dut.out_shifter.value.signed_integer == 16
+    ### ARITHMETIC RIGHT SHIFT TEST END
 
 
 
