@@ -1,4 +1,4 @@
-module ALU #(parameter W=32)
+module ALU #(parameter W=8)
 	(
 	input [W-1:0] inp_src0, 
 	input [W-1:0] inp_src1, 

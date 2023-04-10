@@ -1,4 +1,4 @@
-module multiplexer2to1 #(parameter W = 4)
+module multiplexer2to1 #(parameter W = 8)
   (
 	input [W-1:0] inp_mux0, 
 	input [W-1:0] inp_mux1, 

@@ -1,4 +1,4 @@
-module register_synchronous_reset_write_en #(parameter W = 16) 
+module register_synchronous_reset_write_en #(parameter W = 8) 
 	(
 	input clk, 
 	input write_enable,
