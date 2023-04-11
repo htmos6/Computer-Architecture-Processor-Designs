@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1681228034" />
+    <testcase name="data_path_2_comp" classname="data_path_v" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\DataPathTest\tests\data_path_v.py" lineno="11" time="0.0" sim_time_ns="27000" ratio_time="inf" />
+    <testcase name="data_path_mult_10" classname="data_path_v" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\DataPathTest\tests\data_path_v.py" lineno="39" time="0.0" sim_time_ns="37000" ratio_time="inf" />
+    <testcase name="data_path_copy_4_bit" classname="data_path_v" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\DataPathTest\tests\data_path_v.py" lineno="75" time="0.0" sim_time_ns="37000" ratio_time="inf" />
+  </testsuite>
+</testsuites>
