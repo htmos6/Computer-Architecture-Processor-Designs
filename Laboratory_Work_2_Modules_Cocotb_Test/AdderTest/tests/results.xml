@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1681593395" />
+    <testcase name="adder" classname="adder" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_2_Modules_Cocotb_Test\AdderTest\tests\adder.py" lineno="11" time="0.0009965896606445312" sim_time_ns="3000" ratio_time="3010266.028708134" />
+  </testsuite>
+</testsuites>

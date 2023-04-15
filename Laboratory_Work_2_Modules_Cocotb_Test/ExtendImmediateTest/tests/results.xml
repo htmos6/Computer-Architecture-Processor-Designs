@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1681594787" />
+    <testcase name="extend_immediate" classname="extend_immediate" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_2_Modules_Cocotb_Test\ExtendImmediateTest\tests\extend_immediate.py" lineno="5" time="0.0019986629486083984" sim_time_ns="8000" ratio_time="4002675.8916855543" />
+  </testsuite>
+</testsuites>

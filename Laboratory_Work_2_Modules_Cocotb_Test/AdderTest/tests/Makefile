@@ -12,8 +12,8 @@ TOPLEVEL_LANG ?=verilog
 VERILOG_SOURCES =$(CWD)/../hdl/*.v
 
 
-TOPLEVEL = data_path_v # module name
-MODULE := data_path_v # python test file nme
+TOPLEVEL = adder # module name
+MODULE := adder # python test file nme
 COCOTB_HDL_TIMEUNIT=1us
 COCOTB_HDL_TIMEPRECISION=1us
 
