@@ -86,12 +86,9 @@ Computer Design Laboratory Work 1/.gitignore
 *.vcd
 *.vho
 *.vo
-*.bsf
-*.qpf
 *.xrf
 msim_transcript
 transcript
 _info
 _vmake
 *.bak*
-*.qsf
