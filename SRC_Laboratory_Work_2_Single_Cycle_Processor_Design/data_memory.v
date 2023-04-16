@@ -24,7 +24,7 @@ module data_memory #(parameter byte_W = 4, Addr_W = 8)
 							memory_arr[inp_address+i] = inp_data[i*8 +: 8];
 						end
 				end
-			end
+		end
 	
 	
 	always @(*) // Combinational Logic
