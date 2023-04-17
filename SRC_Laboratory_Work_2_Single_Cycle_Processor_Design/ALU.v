@@ -18,6 +18,7 @@ parameter AND=4'b0000,
 		  Addition_Carry=4'b0101,
 		  SubtractionAB_Carry=4'b0110,
 		  SubtractionBA_Carry=4'b0111,
+		  Compare=4'b1010, // Extracted from ARM user manual
 		  ORR=4'b1100,
 		  Move=4'b1101,
 		  Bit_Clear=4'b1110,
@@ -66,6 +67,11 @@ always@(*) begin
 			out_alu = inp_src1 - inp_src0 + inp_carry - 1;
 			carry_out_flag = ~negative_flag; // ARM uses inverted borrow for subtraction with carry
 			overflow_flag = (inp_src1[WIDTH-1] & ~inp_src0[WIDTH-1] & ~out_alu[WIDTH-1]) | (~inp_src1[WIDTH-1] & inp_src0[WIDTH-1] & out_alu[WIDTH-1]);
+		end
+		Compare:begin
+			out_alu = inp_src0 - inp_src1;
+			carry_out_flag = ~negative_flag; // ARM uses inverted borrow for subtraction with carry
+			overflow_flag = (inp_src0[WIDTH-1] & ~inp_src1[WIDTH-1] & ~out_alu[WIDTH-1]) | (~inp_src0[WIDTH-1] & inp_src1[WIDTH-1] & out_alu[WIDTH-1]);
 		end
 		ORR:begin
 			out_alu = inp_src0 | inp_src1;
