@@ -6,6 +6,11 @@ module program_counter #(parameter W = 32)
 	output reg [W-1:0] out_reg
 	);
 
+	initial 
+		begin
+			out_reg <= 0; // Reset at the next clock cycle
+		end
+
 	always @(posedge clk) 
 		begin
 			if (reset_synchronous == 1) // Clear output @ next edge
