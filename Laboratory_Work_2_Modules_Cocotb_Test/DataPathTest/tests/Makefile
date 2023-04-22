@@ -12,8 +12,8 @@ TOPLEVEL_LANG ?=verilog
 VERILOG_SOURCES =$(CWD)/../hdl/*.v
 
 
-TOPLEVEL = extend_immediate # module name
-MODULE := extend_immediate # python test file nme
+TOPLEVEL = dp_lab2 # module name
+MODULE := dp_lab2 # python test file nme
 COCOTB_HDL_TIMEUNIT=1us
 COCOTB_HDL_TIMEPRECISION=1us
 

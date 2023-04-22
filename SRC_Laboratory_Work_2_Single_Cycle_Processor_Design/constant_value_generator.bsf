@@ -20,15 +20,22 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 176 96)
+	(rect 16 16 256 96)
 	(text "constant_value_generator" (rect 5 0 108 12)(font "Arial" ))
 	(text "inst" (rect 8 64 20 76)(font "Arial" ))
 	(port
-		(pt 160 32)
+		(pt 0 32)
+		(input)
+		(text "reset_synchronous" (rect 0 0 77 12)(font "Arial" ))
+		(text "reset_synchronous" (rect 21 27 98 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 1))
+	)
+	(port
+		(pt 240 32)
 		(output)
-		(text "outVal[W-1..0]" (rect 0 0 57 12)(font "Arial" ))
-		(text "outVal[W-1..0]" (rect 82 27 139 39)(font "Arial" ))
-		(line (pt 160 32)(pt 144 32)(line_width 3))
+		(text "out_reg[W-1..0]" (rect 0 0 62 12)(font "Arial" ))
+		(text "out_reg[W-1..0]" (rect 157 27 219 39)(font "Arial" ))
+		(line (pt 240 32)(pt 224 32)(line_width 3))
 	)
 	(parameter
 		"W"
@@ -41,7 +48,7 @@ applicable agreement for further details.
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 144 64)(line_width 1))
+		(rectangle (rect 16 16 224 64)(line_width 1))
 	)
-	(annotation_block (parameter)(rect 176 -64 276 16))
+	(annotation_block (parameter)(rect 256 -64 356 16))
 )

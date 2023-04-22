@@ -1,0 +1,49 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 6;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2009.vpi";
+S_0000028c7a886520 .scope package, "$unit" "$unit" 2 1;
+ .timescale -6 -6;
+S_0000028c7a8866b0 .scope module, "constant_value_generator" "constant_value_generator" 3 1;
+ .timescale -6 -6;
+    .port_info 0 /INPUT 1 "reset_synchronous";
+    .port_info 1 /OUTPUT 32 "out_reg";
+P_0000028c7a886d50 .param/l "W" 0 3 1, +C4<00000000000000000000000000100000>;
+P_0000028c7a886d88 .param/l "value" 0 3 1, +C4<00000000000000000000000000000101>;
+v0000028c7a886b30_0 .var "out_reg", 31 0;
+o0000028c7a797008 .functor BUFZ 1, C4<z>; HiZ drive
+v0000028c7a8869a0_0 .net "reset_synchronous", 0 0, o0000028c7a797008;  0 drivers
+E_0000028c7a8872a0 .event anyedge, v0000028c7a8869a0_0;
+    .scope S_0000028c7a8866b0;
+T_0 ;
+    %wait E_0000028c7a8872a0;
+    %load/vec4 v0000028c7a8869a0_0;
+    %pad/u 32;
+    %cmpi/e 1, 0, 32;
+    %jmp/0xz  T_0.0, 4;
+    %pushi/vec4 0, 0, 32;
+    %assign/vec4 v0000028c7a886b30_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0000028c7a8869a0_0;
+    %pad/u 32;
+    %cmpi/e 0, 0, 32;
+    %jmp/0xz  T_0.2, 4;
+    %pushi/vec4 5, 0, 32;
+    %assign/vec4 v0000028c7a886b30_0, 0;
+T_0.2 ;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0, $push;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "-";
+    "C:/Users/Legion/Desktop/Quartus/EE446-LABORATORY/Computer-Architecture-Verilog/Laboratory_Work_1_Modules_Cocotb_Test/ConstantValueGeneratorTest/tests/../hdl/constant_value_generator.v";

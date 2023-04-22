@@ -1,8 +1,0 @@
-<testsuites name="results">
-  <testsuite name="all" package="all">
-    <property name="random_seed" value="1680874628" />
-    <testcase name="constant_value_generator_test" classname="constant_value_generator" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Laboratory_Work_1_Warming_Up_for_Computer_Design\Constant_Value_Generator_Tests\tests\constant_value_generator.py" lineno="4" time="0.0" sim_time_ns="2000" ratio_time="inf">
-      <failure />
-    </testcase>
-  </testsuite>
-</testsuites>

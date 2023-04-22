@@ -1,4 +1,4 @@
-module constant_value_generator #(parameter W = 32, value=4) 
+module constant_value_generator #(parameter W = 32, value=5) 
 	( 
 	input reset_synchronous, // Reset == 1 --> Clear Register Content @ Next Rising Edge
 	output reg [W-1:0] out_reg

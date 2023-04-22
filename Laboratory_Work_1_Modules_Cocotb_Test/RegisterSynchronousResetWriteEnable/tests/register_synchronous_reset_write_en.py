@@ -9,7 +9,7 @@ from cocotb.triggers import Edge
 from cocotb.binary import BinaryValue
 
 @cocotb.test()
-async def register_synchronous_reset(dut):
+async def constant_value_generator(dut):
     #Generate the clock
     await cocotb.start(Clock(dut.clk, 10, 'us').start(start_high=False))
     clkedge = RisingEdge(dut.clk)
