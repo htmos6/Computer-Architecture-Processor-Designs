@@ -6,6 +6,11 @@ module register_synchronous_reset_write_en #(parameter W = 32)
 	input [W-1:0] inp_reg, 
 	output reg [W-1:0] out_reg
 	);
+
+	initial 
+		begin
+			out_reg = 0;
+		end
 	
 	always @(posedge clk) // Sequential Circuit
 		begin
