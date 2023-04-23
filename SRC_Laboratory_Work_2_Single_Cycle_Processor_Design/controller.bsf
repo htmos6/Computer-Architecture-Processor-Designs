@@ -20,9 +20,9 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 360 224)
+	(rect 16 16 360 256)
 	(text "controller" (rect 5 0 40 12)(font "Arial" ))
-	(text "inst" (rect 8 192 20 204)(font "Arial" ))
+	(text "inst" (rect 8 224 20 236)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -163,13 +163,20 @@ applicable agreement for further details.
 		(text "AluControl[3..0]" (rect 261 171 323 183)(font "Arial" ))
 		(line (pt 344 176)(pt 328 176)(line_width 3))
 	)
+	(port
+		(pt 344 192)
+		(output)
+		(text "C_flag_reg_out[0..0]" (rect 0 0 83 12)(font "Arial" ))
+		(text "C_flag_reg_out[0..0]" (rect 240 187 323 199)(font "Arial" ))
+		(line (pt 344 192)(pt 328 192)(line_width 3))
+	)
 	(parameter
 		"W"
 		"32"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 328 192)(line_width 1))
+		(rectangle (rect 16 16 328 224)(line_width 1))
 	)
 	(annotation_block (parameter)(rect 360 -64 460 16))
 )
