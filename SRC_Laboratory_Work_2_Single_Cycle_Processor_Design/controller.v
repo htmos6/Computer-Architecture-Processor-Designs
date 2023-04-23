@@ -19,7 +19,8 @@ module controller #(parameter W=32)
         output reg AluSrc,
         output reg [1:0] ImmSrc,
         output reg [1:0] RegSrc,
-        output reg [3:0] AluControl
+        output reg [3:0] AluControl,
+        output reg [0:0] C_flag_reg_out
     );
 
     reg [0:0] write_enable_NZ;
@@ -41,6 +42,7 @@ module controller #(parameter W=32)
 
     always @(*) 
         begin
+            C_flag_reg_out = CV_flags_reg_out[1];
             case({Op, Func[5]}) // Func[5] --> Immediate Field
                 3'b000: // Data Processing Instruction with Register Shift 
                     begin
