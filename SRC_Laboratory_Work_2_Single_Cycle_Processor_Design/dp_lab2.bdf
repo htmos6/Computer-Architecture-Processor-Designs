@@ -1126,22 +1126,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1056 568)
-	(pt 1056 640)
-	(bus)
-)
-(connector
-	(pt 856 568)
-	(pt 1056 568)
-	(bus)
-)
-(connector
-	(text "inst[15..12]" (rect 1077 552 1132 564)(font "Arial" ))
-	(pt 1056 568)
-	(pt 1352 568)
-	(bus)
-)
-(connector
 	(pt 152 664)
 	(pt 224 664)
 	(bus)
@@ -1288,11 +1272,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 856 568)
-	(pt 856 800)
-	(bus)
-)
-(connector
 	(pt 856 800)
 	(pt 856 824)
 	(bus)
@@ -1300,22 +1279,6 @@ applicable agreement for further details.
 (connector
 	(pt 2368 704)
 	(pt 3384 704)
-	(bus)
-)
-(connector
-	(pt 1952 568)
-	(pt 1696 568)
-	(bus)
-)
-(connector
-	(pt 1696 568)
-	(pt 1696 640)
-	(bus)
-)
-(connector
-	(text "inst[15..12]" (rect 1134 624 1189 636)(font "Arial" ))
-	(pt 1056 640)
-	(pt 1696 640)
 	(bus)
 )
 (connector
@@ -1331,21 +1294,6 @@ applicable agreement for further details.
 (connector
 	(pt 1952 536)
 	(pt 1696 536)
-	(bus)
-)
-(connector
-	(pt 1952 584)
-	(pt 1712 584)
-	(bus)
-)
-(connector
-	(pt 1712 992)
-	(pt 1592 992)
-	(bus)
-)
-(connector
-	(pt 1712 584)
-	(pt 1712 992)
 	(bus)
 )
 (connector
@@ -1804,11 +1752,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 856 552)
-	(pt 856 568)
-	(bus)
-)
-(connector
 	(pt 3912 400)
 	(pt 4056 400)
 	(bus)
@@ -1873,14 +1816,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 1952 520)
-	(pt 1624 520)
-)
-(connector
-	(pt 1624 520)
-	(pt 1624 736)
-)
-(connector
 	(pt 368 656)
 	(pt 280 656)
 	(bus)
@@ -1929,11 +1864,76 @@ applicable agreement for further details.
 	(pt 928 480)
 	(pt 928 496)
 )
+(connector
+	(pt 1952 568)
+	(pt 1696 568)
+	(bus)
+)
+(connector
+	(pt 856 552)
+	(pt 856 568)
+	(bus)
+)
+(connector
+	(pt 856 568)
+	(pt 856 800)
+	(bus)
+)
+(connector
+	(pt 1696 568)
+	(pt 1696 640)
+	(bus)
+)
+(connector
+	(text "<<__$DEF_ALIAS198>>" (rect 1134 624 1252 636)(font "Arial" )(invisible))
+	(pt 1696 640)
+	(pt 1056 640)
+	(bus)
+)
+(connector
+	(pt 856 568)
+	(pt 1056 568)
+	(bus)
+)
+(connector
+	(text "inst[15..12]" (rect 1069 552 1124 564)(font "Arial" ))
+	(pt 1056 568)
+	(pt 1352 568)
+	(bus)
+)
+(connector
+	(text "inst[15..12]" (rect 1040 577 1052 632)(font "Arial" )(vertical))
+	(pt 1056 568)
+	(pt 1056 640)
+	(bus)
+)
+(connector
+	(pt 1952 584)
+	(pt 1712 584)
+	(bus)
+)
+(connector
+	(pt 1592 992)
+	(pt 1712 992)
+	(bus)
+)
+(connector
+	(pt 1712 584)
+	(pt 1712 992)
+	(bus)
+)
+(connector
+	(pt 1952 520)
+	(pt 1624 520)
+)
+(connector
+	(pt 1624 520)
+	(pt 1624 736)
+)
 (junction (pt -208 248))
 (junction (pt 856 800))
 (junction (pt 856 344))
 (junction (pt 856 552))
-(junction (pt 1056 568))
 (junction (pt 856 568))
 (junction (pt 224 672))
 (junction (pt 2368 504))
@@ -1951,3 +1951,4 @@ applicable agreement for further details.
 (junction (pt 3528 -152))
 (junction (pt 3528 -184))
 (junction (pt 3384 432))
+(junction (pt 1056 568))

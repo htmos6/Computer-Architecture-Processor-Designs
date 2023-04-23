@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1680978699" />
-    <testcase name="register_file" classname="register_file" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Warming_Up_for_Computer_Design\RegisterFileTest\tests\register_file.py" lineno="11" time="0.008019685745239258" sim_time_ns="201000" ratio_time="25063326.21815263" />
+    <property name="random_seed" value="1682272544" />
+    <testcase name="register_file" classname="register_file" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_1_Modules_Cocotb_Test\RegisterFileTest\tests\register_file.py" lineno="11" time="0.009019136428833008" sim_time_ns="201000" ratio_time="22285947.394855797" />
   </testsuite>
 </testsuites>

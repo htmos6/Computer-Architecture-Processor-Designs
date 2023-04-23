@@ -18,10 +18,15 @@ module data_memory #(parameter byte_W = 4, Addr_W = 8)
 			memory_arr[2] = 8'h00;
 			memory_arr[3] = 8'h00;
 
-			memory_arr[4] = 8'h08;
+			memory_arr[4] = 8'h05;
 			memory_arr[5] = 8'h00;
 			memory_arr[6] = 8'h00;
 			memory_arr[7] = 8'h00;
+
+			memory_arr[8] = 8'h09;
+			memory_arr[9] = 8'h00;
+			memory_arr[10] = 8'h00;
+			memory_arr[11] = 8'h00;
 		end
 
 	always @(posedge clk) // Sequential Logic

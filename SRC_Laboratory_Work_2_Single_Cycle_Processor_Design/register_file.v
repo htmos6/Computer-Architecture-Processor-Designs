@@ -69,7 +69,7 @@ module register_file #(parameter W = 32)
     register_synchronous_reset_write_en #(.W(W)) R13 (.clk(clk), .write_enable(write_enable & out_write_wire[13]), .reset_synchronous(reset_synchronous), .inp_reg(inp_write_data), .out_reg(out_R13));
     register_synchronous_reset_write_en #(.W(W)) R14 (.clk(clk), .write_enable(write_enable & out_write_wire[14]), .reset_synchronous(reset_synchronous), .inp_reg(inp_write_data), .out_reg(out_R14));
     // register_synchronous_reset_write_en #(.W(W)) R15 (.clk(clk), .write_enable(write_enable & out_write_wire[15]), .reset_synchronous(reset_synchronous), .inp_reg(inp_write_data), .out_reg(out_R15));
-    register_synchronous_reset_write_en #(.W(W)) R15 (.clk(clk), .write_enable(1), .reset_synchronous(reset_synchronous), .inp_reg(inp_write_data_R15), .out_reg(out_R15));
+    register_synchronous_reset_write_en #(.W(W)) R15 (.clk(clk), .write_enable(1'b1), .reset_synchronous(reset_synchronous), .inp_reg(inp_write_data_R15), .out_reg(out_R15));
 
 
     multiplexer16to1 #(.W(W)) read_0_select (

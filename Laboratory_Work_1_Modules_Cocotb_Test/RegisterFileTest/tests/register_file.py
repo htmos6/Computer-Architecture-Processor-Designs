@@ -41,13 +41,13 @@ async def register_file(dut):
         assert dut.out_read_data1.value == inp_val
 
     # Combinational read
-    for i in range(15):
+    for i in range(14):
         dut.inp_read_address0.value = i
-        dut.inp_read_address1.value = i
+        dut.inp_read_address1.value = i+1
         await Timer(1, units="us")
 
         assert dut.out_read_data0.value == lst_values[i]
-        assert dut.out_read_data1.value == lst_values[i]
+        assert dut.out_read_data1.value == lst_values[i+1]
 
     # Write Enable Test
     dut.write_enable.value = 0
