@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1682193433" />
-    <testcase name="instruction_memory" classname="instruction_memory" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_2_Modules_Cocotb_Test\InstructionMemoryTest\tests\instruction_memory.py" lineno="11" time="0.0009963512420654297" sim_time_ns="4000" ratio_time="4014648.4804977267" />
+    <property name="random_seed" value="1682300009" />
+    <testcase name="instruction_memory" classname="instruction_memory" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_2_Modules_Cocotb_Test\InstructionMemoryTest\tests\instruction_memory.py" lineno="11" time="0.0" sim_time_ns="4000" ratio_time="inf" />
   </testsuite>
 </testsuites>
