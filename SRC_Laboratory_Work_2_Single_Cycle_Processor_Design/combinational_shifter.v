@@ -1,6 +1,6 @@
 module combinational_shifter #(parameter W = 32)
 	(
-		input signed [W-1:0] inp_shifter, 
+		input [W-1:0] inp_shifter, 
 		input [4:0] shamt, 
 		input [1:0] control, 
 		output reg [W-1:0] out_shifter

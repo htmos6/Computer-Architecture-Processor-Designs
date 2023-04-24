@@ -20,15 +20,32 @@ module instruction_memory #(parameter byte_W = 4, Addr_W = 8)
 			memory_arr[6] = 8'h12;
 			memory_arr[7] = 8'hE4;
 
+			/* 
+			ADD R2, R3, R1
 			memory_arr[8] = 8'h01;
-			memory_arr[9] = 8'h21;
+			memory_arr[9] = 8'h20;
 			memory_arr[10] = 8'h83;
 			memory_arr[11] = 8'hE0;
+			*/
 
-			memory_arr[12] = 8'h00;
-			memory_arr[13] = 8'h00;
-			memory_arr[14] = 8'h00;
-			memory_arr[15] = 8'h18;
+			// SUB R3, R3, R1 
+			memory_arr[8] = 8'h01;
+			memory_arr[9] = 8'h30;
+			memory_arr[10] = 8'h43;
+			memory_arr[11] = 8'hE0;
+
+			// LDR R7, [R2, #8]
+			memory_arr[12] = 8'h08;
+			memory_arr[13] = 8'h70;
+			memory_arr[14] = 8'h12;
+			memory_arr[15] = 8'hE4;
+
+
+			// ADD R3, R3, R7
+			memory_arr[16] = 8'h07;
+			memory_arr[17] = 8'h30;
+			memory_arr[18] = 8'h83;
+			memory_arr[19] = 8'hE0;
 		end
 	
 	always @(*) // Combinational Logic
