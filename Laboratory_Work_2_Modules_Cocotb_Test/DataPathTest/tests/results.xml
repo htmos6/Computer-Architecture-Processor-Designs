@@ -1,6 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1682294703" />
-    <testcase name="dp_lab2" classname="dp_lab2" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_2_Modules_Cocotb_Test\DataPathTest\tests\dp_lab2.py" lineno="15" time="0.0020380020141601562" sim_time_ns="73000" ratio_time="35819395.41413196" />
+    <property name="random_seed" value="1682455324" />
+    <testcase name="dp_lab2" classname="dp_lab2" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_2_Modules_Cocotb_Test\DataPathTest\tests\dp_lab2.py" lineno="15" time="0.00797724723815918" sim_time_ns="533000" ratio_time="66815028.30329657">
+      <failure />
+    </testcase>
   </testsuite>
 </testsuites>
