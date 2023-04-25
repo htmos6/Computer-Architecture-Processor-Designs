@@ -36,8 +36,8 @@ module controller #(parameter W=32)
     assign CondEx = (Cond == 4'b1110) || (Cond == 4'b0000 && NZ_flags_reg_out[0] == 1'b1) || (Cond == 4'b0001 &&  NZ_flags_reg_out[0] == 1'b0);
 
 
-    register_synchronous_reset_write_en #(.W(2)) NZ_Flags_Reg (.clk(clk), .write_enable(write_enable_NZ), .reset_synchronous(reset_sync_NZ), .inp_reg( {negative_flag, zero_flag} ), .out_reg(NZ_flags_reg_out));
-    register_synchronous_reset_write_en #(.W(2)) CV_Flags_Reg (.clk(clk), .write_enable(write_enable_CV), .reset_synchronous(reset_sync_CV), .inp_reg( {carry_out_flag, overflow_flag} ), .out_reg(CV_flags_reg_out));
+    register_synchronous_reset_write_en #(.W(2)) NZ_Flags_Reg (.clk(clk), .write_enable(write_enable_NZ), .reset_synchronous(0), .inp_reg( {negative_flag, zero_flag} ), .out_reg(NZ_flags_reg_out));
+    register_synchronous_reset_write_en #(.W(2)) CV_Flags_Reg (.clk(clk), .write_enable(write_enable_CV), .reset_synchronous(0), .inp_reg( {carry_out_flag, overflow_flag} ), .out_reg(CV_flags_reg_out));
 
 
     always @(*) 
