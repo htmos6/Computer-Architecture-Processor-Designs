@@ -27,6 +27,43 @@ module data_memory #(parameter byte_W = 4, Addr_W = 8)
 			memory_arr[9] = 8'h00;
 			memory_arr[10] = 8'h00;
 			memory_arr[11] = 8'h00;
+
+			memory_arr[12] = 8'h10;
+			memory_arr[13] = 8'h00;
+			memory_arr[14] = 8'h00;
+			memory_arr[15] = 8'h00;
+
+			memory_arr[16] = 8'h04;
+			memory_arr[17] = 8'h00;
+			memory_arr[18] = 8'h00;
+			memory_arr[19] = 8'h00;
+
+			// Array Length
+			memory_arr[20] = 8'h03;
+			memory_arr[21] = 8'h00;
+			memory_arr[22] = 8'h00;
+			memory_arr[23] = 8'h00;
+
+			// ARRAY VALUES
+			memory_arr[24] = 8'h05;
+			memory_arr[25] = 8'h00;
+			memory_arr[26] = 8'h00;
+			memory_arr[27] = 8'h00;
+
+			memory_arr[28] = 8'h07;
+			memory_arr[29] = 8'h00;
+			memory_arr[30] = 8'h00;
+			memory_arr[31] = 8'h00;
+
+			memory_arr[32] = 8'h09;
+			memory_arr[33] = 8'h00;
+			memory_arr[34] = 8'h00;
+			memory_arr[35] = 8'h00;
+
+
+
+
+
 		end
 
 	always @(posedge clk) // Sequential Logic
