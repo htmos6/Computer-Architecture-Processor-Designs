@@ -18,7 +18,6 @@ module hex_number_to_7_seg_converter (input [3:0] inp_hex_number, output reg [6:
 			13 : out_hex_number = 7'b0100001;
 			14 : out_hex_number = 7'b0000110;
 			15 : out_hex_number = 7'b0001110;
-			default: out_hex_number = 0;
 		endcase
 	end
 

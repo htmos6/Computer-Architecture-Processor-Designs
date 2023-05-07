@@ -38,7 +38,27 @@
 
 set_global_assignment -name FAMILY "Cyclone IV GX"
 set_global_assignment -name DEVICE AUTO
-set_global_assignment -name TOP_LEVEL_ENTITY Multi_Cycle_Processor_Design
+set_global_assignment -name TOP_LEVEL_ENTITY memory
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 13.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:44:29  MAY 07, 2023"
 set_global_assignment -name LAST_QUARTUS_VERSION 13.1
+set_global_assignment -name VERILOG_FILE adder.v
+set_global_assignment -name VERILOG_FILE ALU.v
+set_global_assignment -name VERILOG_FILE combinational_shifter.v
+set_global_assignment -name VERILOG_FILE constant_value_generator.v
+set_global_assignment -name VERILOG_FILE controller.v
+set_global_assignment -name VERILOG_FILE decoder4to16.v
+set_global_assignment -name VERILOG_FILE extend_immediate.v
+set_global_assignment -name VERILOG_FILE hex_number_to_7_seg_converter.v
+set_global_assignment -name VERILOG_FILE multiplexer2to1.v
+set_global_assignment -name VERILOG_FILE multiplexer4to1.v
+set_global_assignment -name VERILOG_FILE multiplexer16to1.v
+set_global_assignment -name VERILOG_FILE program_counter.v
+set_global_assignment -name VERILOG_FILE register_file.v
+set_global_assignment -name VERILOG_FILE register_synchronous_reset_write_en.v
+set_global_assignment -name VERILOG_FILE memory.v
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name TEXT_FILE mem_data.txt
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

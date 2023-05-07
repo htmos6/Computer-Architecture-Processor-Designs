@@ -11,7 +11,6 @@ module multiplexer2to1 #(parameter W = 32)
 		case (select)
 			1'b0: out_mux = inp_mux0;
 			1'b1: out_mux = inp_mux1;
-			default: out_mux = 0;
 		endcase
 	end
 	

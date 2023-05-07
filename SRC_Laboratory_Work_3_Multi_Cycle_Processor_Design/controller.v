@@ -10,24 +10,29 @@ module controller #(parameter W=32)
         input overflow_flag,
         input negative_flag,
         input zero_flag,
-        output reg PCSrc,
+
+        output reg PCWrite, 
         output reg RegWrite,
         output reg MemWrite,
-        output reg MemToReg,
-        output reg AluSrc_Branch_Absolute_Mux_Sel,
-        output reg Write_Data_PC_Mux_Sel,
-        output reg AluSrc,
+        output reg IRWrite,
+        output reg AdrSrc, // 1 bit
+        output reg AluSrcA, // 1 bit
+        output reg [1:0] AluSrcB, // 2 bit
         output reg [1:0] ImmSrc,
-        output reg [1:0] RegSrc,
-        output reg [3:0] AluControl,
+        output reg [1:0] ResultSrc,
+        output reg [1:0] RegSrc, 
+        output reg [3:0] AluControl, 
+
+
+        // output reg AluSrc_Branch_Absolute_Mux_Sel,
+        // output reg Write_Data_PC_Mux_Sel,
         output reg [0:0] C_flag_reg_out
     );
+    
+    reg [3:0] state_number;
 
     reg [0:0] write_enable_NZ;
     reg [0:0] write_enable_CV;
-
-    reg [0:0] reset_sync_NZ;
-    reg [0:0] reset_sync_CV;
 
     wire [1:0] NZ_flags_reg_out;
     wire [1:0] CV_flags_reg_out;
@@ -39,140 +44,202 @@ module controller #(parameter W=32)
     register_synchronous_reset_write_en #(.W(2)) NZ_Flags_Reg (.clk(clk), .write_enable(write_enable_NZ), .reset_synchronous(0), .inp_reg( {negative_flag, zero_flag} ), .out_reg(NZ_flags_reg_out));
     register_synchronous_reset_write_en #(.W(2)) CV_Flags_Reg (.clk(clk), .write_enable(write_enable_CV), .reset_synchronous(0), .inp_reg( {carry_out_flag, overflow_flag} ), .out_reg(CV_flags_reg_out));
 
+    initial 
+        begin
+            state_number = 0;
+        end
 
-    always @(*) 
+
+
+    always @(posedge clk) 
         begin
             C_flag_reg_out = CV_flags_reg_out[1];
-            case({Op, Func[5]}) // Func[5] --> Immediate Field
-                3'b000: // Data Processing Instruction with Register Shift 
+            case (state_number)
+                4'd0: // FETCH CYCLE --> PC IS ALREADY AT PC REGISTER
+                    begin   
+                        PCWrite <= (1'b1 && CondEx);
+                        RegWrite <= (1'b0 && CondEx);
+                        MemWrite <= (1'b0 && CondEx);
+                        IRWrite <= 1;
+                        AdrSrc  <= 0; // 1 bit
+                        AluSrcA  <= 1; // 1 bit
+                        AluSrcB <= 2'b10; // 2 bit
+                        ImmSrc <= 2'bxx;
+                        ResultSrc <= 2'b10;
+                        RegSrc <= 2'b00;
+                        AluControl <= 4'b0100; // Add
+                        write_enable_NZ <= 0; // Do not Modify NZ flags
+                        write_enable_CV <= 0; // Do not  Modify CV flags
+                        state_number <= 1;
+                    end
+                4'd1:  // DECODE CYCLE --> PC IS ALREADY AT PC REGISTER
                     begin
-                        if( (Func[4:1] == 4'b0100) || (Func[4:1] == 4'b0010) ) // If operation is ADD or SUB operation
+                        PCWrite <= (1'b0 && CondEx);
+                        RegWrite <= (1'b0 && CondEx);
+                        MemWrite <= (1'b0 && CondEx);
+                        IRWrite <= 0;
+                        AdrSrc  <= 1'bx; // 1 bit
+                        AluSrcA  <= 1; // 1 bit
+                        AluSrcB <= 2'b10; // 2 bit
+                        ResultSrc <= 2'b10;
+                        AluControl <= 4'b0100; // Add
+                        write_enable_NZ <= 0; // Do not Modify NZ flags
+                        write_enable_CV <= 0; // Do not  Modify CV flags
+
+                        if (Op == 2'b00) // Data Processing instruction
                             begin
-                                PCSrc = (1'b0  && CondEx);
-                                RegWrite = (1'b1 && CondEx); // We will write result to reg
-                                MemWrite = (1'b0 && CondEx); // We will not write to memory
-                                MemToReg = 1'b0; // Select input comes from ALU, not from memory. 
-                                AluSrc = 1'b0; // Choose Rm from 2x1 MUX (inputs: Rm or ExtImm)
-                                ImmSrc = 2'b00; // Actually it is a don't care
-                                RegSrc = 2'b00; // Choose Rm for read data input 2
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b1;
-                                Write_Data_PC_Mux_Sel = 1'b0;
-                                write_enable_NZ = ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
-                                write_enable_CV = ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
-                                AluControl = Func[4:1]; 
+                                if (Func[5] == 1) // Data processing with immediate
+                                    begin
+                                        RegSrc <= 2'bx0;
+                                        ImmSrc <= 2'b00; // imm8
+                                        state_number <= 7;
+                                    end
+                                else if ( (Func[5] == 0) && (Func[4:1] != 4'b1001) && ({Func[0], inst_19_to_4_BX} != 17'h0FFF1)) // Data processing with register
+                                    begin
+                                        RegSrc <= 2'b00;
+                                        ImmSrc <= 2'b00; // imm8
+                                        state_number <= 6;
+                                    end
+                                else if ( (Func[5] == 0) && (Func[4:1] == 4'b1001) && ({Func[0], inst_19_to_4_BX} == 17'h0FFF1)) // BX instruction
+                                    begin
+                                        RegSrc <= 2'b0x;
+                                        ImmSrc <= 2'bxx; // imm8
+                                        state_number <= 10;
+                                    end
                             end
-                        else if( (Func[4:1] == 4'b0000) || (Func[4:1] == 4'b1100) || (Func[4:1] == 4'b1101) ) // If operation is AND, ORR, MOV
+                        else if (Op == 2'b01) // LDR or STR instruction
                             begin
-                                PCSrc = (1'b0 && CondEx);
-                                RegWrite = (1'b1 && CondEx); // We will write result to reg
-                                MemWrite = (1'b0 && CondEx); // We will not write to memory
-                                MemToReg = 1'b0; // Select input comes from ALU, not from memory. 
-                                AluSrc = 1'b0; // Choose Rm from 2x1 MUX (inputs: Rm or ExtImm)
-                                ImmSrc = 2'b00; // Actually it is a don't care
-                                RegSrc = 2'b00; // Choose Rm for read data input 2
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b1;
-                                Write_Data_PC_Mux_Sel = 1'b0;
-                                write_enable_NZ = ((Func[0] ? 1 : 0) && CondEx); // logical operations modifies NZ flags only
-                                write_enable_CV = 0;               // Data operations cannot modifies CV flags 
-                                AluControl = Func[4:1]; 
+                                if (Func[5] == 0 && Func[0] == 1) // Func_t0 == 1 --> LDR with imm
+                                    begin
+                                        RegSrc <= 2'bx0;
+                                        ImmSrc <= 2'b01; // imm12
+                                        state_number <= 6;
+                                    end
+                                else if (Func[5] == 0 && Func[0] == 0) // Func_t0 == 0 --> STR with imm
+                                    begin
+                                        RegSrc <= 2'b10;
+                                        ImmSrc <= 2'b01; // imm12
+                                        state_number <= 6;
+                                    end
                             end
-                        else if ( (Func[4:1] == 4'b1010) ) // If operation is a COMPARE
+                        else if (Op == 2'b10) // Branch instruction
                             begin
-                                PCSrc = (1'b0 && CondEx);
-                                RegWrite = (1'b0 && CondEx); // We will not write result to reg
-                                MemWrite = (1'b0 && CondEx); // We will not write to memory
-                                MemToReg = 1'bx; // Select input comes from ALU, not from memory. 
-                                AluSrc = 1'b0; // Choose Rd from 2x1 MUX (inputs: Rm or ExtImm)
-                                ImmSrc = 2'bxx; // Actually it is a don't care
-                                RegSrc = 2'b10; // Choose Rm for read data input 2
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b1;
-                                Write_Data_PC_Mux_Sel = 1'bx;
-                                write_enable_NZ = ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
-                                write_enable_CV = ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
-                                AluControl = Func[4:1]; 
-                            end
-                        else if ( (Func[4:1] == 4'b1001) && ({Func[0], inst_19_to_4_BX} == 17'h0FFF1) ) // BX instruction
-                            begin
-                                PCSrc = (1'b1 && CondEx);
-                                RegWrite = (1'b0 && CondEx); // We will not write result to reg
-                                MemWrite = (1'b0 && CondEx); // We will not write to memory
-                                MemToReg = 1'b0; // Select input comes from ALU, not from memory. 
-                                AluSrc = 1'b0; // Choose Rd from 2x1 MUX (inputs: Rm or ExtImm)
-                                ImmSrc = 2'bxx; // Actually it is a don't care
-                                RegSrc = 2'b0x; // Choose Rm for read data input 2
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b0;
-                                Write_Data_PC_Mux_Sel = 1'bx;
-                                write_enable_NZ = 0; // Modify NZ flags
-                                write_enable_CV = 0; // Modify CV flags
-                                AluControl = 4'b1101; // Move B 
+                                RegSrc <= 2'bx1;
+                                ImmSrc <= 2'b10; // imm24
+                                state_number <= 9;
                             end
                     end
-                3'b010: 
-                    case (Func[0])
-                        1'b0: // Func[0] == 0 --> Store // Store Instruction with Immediate12
+                4'd2:
+                    begin
+                        AluSrcA  <= 0; // 1 bit
+                        AluSrcB <= 2'b01; // 2 bit
+                        AluControl <= 4'b0100; // Add
+                        write_enable_NZ <= 0; // Do not Modify NZ flags
+                        write_enable_CV <= 0; // Do not  Modify CV flags
+
+                        if (Func[0] == 1) // LDR
                             begin
-                                PCSrc = (1'b0 && CondEx);
-                                RegWrite = (1'b0 && CondEx); 
-                                MemWrite = (1'b1 && CondEx); 
-                                MemToReg = 1'bx; 
-                                AluSrc = 1'b1; 
-                                ImmSrc = 2'b01; // Extend Immediate 12
-                                RegSrc = 2'b10; 
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b1;
-                                Write_Data_PC_Mux_Sel = 1'b0;
-                                write_enable_NZ = 0; // Do not Modify NZ flags
-                                write_enable_CV = 0; // Do not  Modify CV flags
-                                AluControl = 4'b0100; // Add
+                                state_number <= 3;
                             end
-                        1'b1: // Func[0] == 1 --> Load  // Load Instruction with Immediate12
+                        else if (Func[0] == 0) // STR
                             begin
-                                PCSrc = (1'b0 && CondEx);
-                                RegWrite = (1'b1 && CondEx); 
-                                MemWrite = (1'b0 && CondEx); 
-                                MemToReg = 1'b1; 
-                                AluSrc = 1'b1; 
-                                ImmSrc = 2'b01; // Extend Immediate 12
-                                RegSrc = 2'bx0; 
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b1;
-                                Write_Data_PC_Mux_Sel = 1'b0;
-                                write_enable_NZ = 0; // Do not Modify NZ flags
-                                write_enable_CV = 0; // Do not  Modify CV flags
-                                AluControl = 4'b0100; // Add
+                                state_number <= 5;
                             end
-                    endcase
-                3'b101: // Branch Instructions with Immediate24
-                    case (Func[4])
-                        1'b0: // Branch
+                    end
+                4'd3: // MemRead
+                    begin
+                        ResultSrc <= 2'b00;
+                        AdrSrc  <= 1'b1; // 1 bit
+                        state_number <= 4;
+                    end
+                4'd4: // MemWB
+                    begin
+                        ResultSrc <= 2'b01;
+                        RegWrite <= (1'b1 && CondEx);
+                        state_number <= 0;
+                    end
+                4'd5: // MemWrite
+                    begin
+                        ResultSrc <= 2'b00;
+                        AdrSrc  <= 1'b1; // 1 bit
+                        MemWrite <= 1'b1;
+                        state_number <= 0;
+                    end
+                4'd6: // Data processing with Register ExecuteR
+                    begin   
+                        AluSrcA  <= 0; // 1 bit
+                        AluSrcB <= 2'b00; // 2 bit
+                        AluControl <= Func[4:1]; 
+
+                        if ((Func[4:1] == 4'b0100) || (Func[4:1] == 4'b0010)) // If operation is ADD or SUB operation
                             begin
-                                PCSrc = (1'b1 && CondEx);
-                                RegWrite = (1'b0 && CondEx); 
-                                MemWrite = (1'b0 && CondEx); 
-                                MemToReg = 1'b0; 
-                                AluSrc = 1'b1; 
-                                ImmSrc = 2'b10; // Extend Immediate 24
-                                RegSrc = 2'bx1; 
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b0; // Alu srcA = 0, Alu srcB = ExtImm
-                                Write_Data_PC_Mux_Sel = 1'b0;
-                                write_enable_NZ = 0; // Do not Modify NZ flags
-                                write_enable_CV = 0; // Do not  Modify CV flags
-                                AluControl = 4'b0100; // Pc + extendImm32(extendImm24to32)
+                                write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
+                                write_enable_CV <= ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
                             end
-                        1'b1: // Branch with Link
+                        else if((Func[4:1] == 4'b0000) || (Func[4:1] == 4'b1100) || (Func[4:1] == 4'b1101)) // If operation is AND, ORR, MOV
                             begin
-                                PCSrc = (1'b1 && CondEx); 
-                                RegWrite = (1'b1 && CondEx); // Write to R14 <-- PC 
-                                MemWrite = (1'b0 && CondEx); 
-                                MemToReg = 1'b0;
-                                AluSrc = 1'b1;
-                                ImmSrc = 2'b10; // Extend Immediate 24 
-                                RegSrc = 2'bx1; 
-                                AluSrc_Branch_Absolute_Mux_Sel = 1'b0; // Alu srcA = 0, Alu srcB = ExtImm
-                                Write_Data_PC_Mux_Sel = 1'b1; // Selects RD1 -> R15 (pc), writes to the R14
-                                write_enable_NZ = 0; // Do not Modify NZ flags
-                                write_enable_CV = 0; // Do not  Modify CV flags
-                                AluControl = 4'b0100; // Pc + extendImm32(extendImm24to32)
+                                write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // logical operations modifies NZ flags only
+                                write_enable_CV <= 0; // Data operations cannot modifies CV flags 
                             end
-                    endcase
+                        else if ((Func[4:1] == 4'b1010)) // If operation is a COMPARE
+                            begin
+                                write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
+                                write_enable_CV <= ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
+                            end
+
+                        state_number <= 8;
+                    end
+                4'd7: // Data processing with Immediate ExecuteL
+                    begin
+                        AluSrcA  <= 0; // 1 bit
+                        AluSrcB <= 2'b01; // 2 bit
+                        AluControl <= Func[4:1]; 
+
+                        if ((Func[4:1] == 4'b0100) || (Func[4:1] == 4'b0010)) // If operation is ADD or SUB operation
+                            begin
+                                write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
+                                write_enable_CV <= ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
+                            end
+                        else if((Func[4:1] == 4'b0000) || (Func[4:1] == 4'b1100) || (Func[4:1] == 4'b1101)) // If operation is AND, ORR, MOV
+                            begin
+                                write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // logical operations modifies NZ flags only
+                                write_enable_CV <= 0; // Data operations cannot modifies CV flags 
+                            end
+                        else if ((Func[4:1] == 4'b1010)) // If operation is a COMPARE
+                            begin
+                                write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
+                                write_enable_CV <= ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
+                            end
+
+                        state_number <= 8;
+                    end
+                4'd8: // ALUWB
+                    begin
+                        ResultSrc <= 2'b00;
+                        RegWrite <= (1'b1 && CondEx);
+                        state_number <= 0;
+                    end
+                4'd9: // Branch
+                    begin
+                        AluSrcA  <= 0; // 1 bit
+                        AluSrcB <= 2'b01; // 2 bit
+                        AluControl <= 4'b1101; // MOVE B
+                        write_enable_NZ <= 0; // Do not Modify NZ flags
+                        write_enable_CV <= 0; // Do not  Modify CV flags
+                        ResultSrc <= 2'b10;
+                        PCWrite <= (1'b1 && CondEx);
+                        // BRANCH SIGNAL
+                    end
+                4'd10: // BX
+                    begin
+                        AluSrcB <= 2'b00; // 2 bit
+                        AluControl <= 4'b1101; // MOVE B
+                        ResultSrc <= 2'b10;
+                        PCWrite <= (1'b1 && CondEx);
+                    end
+                default:
+					AluSrcB <= 2'b00; // 2 bit
             endcase
+            
         end    
 endmodule

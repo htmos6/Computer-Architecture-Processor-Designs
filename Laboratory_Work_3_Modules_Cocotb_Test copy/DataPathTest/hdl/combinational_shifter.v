@@ -24,7 +24,6 @@ module combinational_shifter #(parameter W = 32)
 						temp_shift = temp_R_shift + temp_L_shift;
 						out_shifter = (inp_shifter >> shamt) + (inp_shifter << (W-shamt));
 					end
-				default: out_shifter = 0;
 			endcase
 		end
 endmodule

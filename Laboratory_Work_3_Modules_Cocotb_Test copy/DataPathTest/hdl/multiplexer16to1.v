@@ -39,7 +39,6 @@ module multiplexer16to1 #(parameter W = 32)
 			4'd13: out_mux = inp_mux13;
 			4'd14: out_mux = inp_mux14; 
 			4'd15: out_mux = inp_mux15;
-			default: out_mux = 0;
 		endcase
 	end
 	

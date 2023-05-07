@@ -19,7 +19,6 @@ module decoder4to16(input [3:0] inp_dec, output reg [15:0] out_dec);
 			4'b1101: out_dec = 16'b0010000000000000;
 			4'b1110: out_dec = 16'b0100000000000000;
 			4'b1111: out_dec = 16'b1000000000000000;
-			default: out_dec = 0;
 		endcase
 	end
 	

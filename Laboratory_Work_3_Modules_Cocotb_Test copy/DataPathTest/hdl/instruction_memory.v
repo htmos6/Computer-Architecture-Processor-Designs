@@ -10,13 +10,11 @@ module instruction_memory #(parameter byte_W = 4, Addr_W = 8)
 	initial 
 		begin
 			i = 0;
-			// LDR R1, [R2, #0]
 			memory_arr[0] = 8'h00;
 			memory_arr[1] = 8'h10;
 			memory_arr[2] = 8'h12;
 			memory_arr[3] = 8'hE4;
 
-			// LDR R3, [R2, #4]
 			memory_arr[4] = 8'h04;
 			memory_arr[5] = 8'h30;
 			memory_arr[6] = 8'h12;
