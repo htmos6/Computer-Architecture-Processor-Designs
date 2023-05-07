@@ -54,6 +54,7 @@ async def constant_value_generator(dut):
     dut.write_enable = 0
     await Timer(1, units="us")
     assert dut.out_reg.value != inp_value # check
+    
     await clkedge # wait until posedge
     await Timer(1, units="us")
     assert dut.out_reg.value == 7 # check if the module added the values correctly
