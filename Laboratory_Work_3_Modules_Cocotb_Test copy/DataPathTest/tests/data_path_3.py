@@ -13,7 +13,7 @@ from cocotb.binary import BinaryValue
 
 
 @cocotb.test()
-async def dp_lab2(dut):
+async def data_path_3(dut):
     #Generate the clock
     await cocotb.start(Clock(dut.clk, 20, 'us').start(start_high=False))
     clkedge = RisingEdge(dut.clk)
