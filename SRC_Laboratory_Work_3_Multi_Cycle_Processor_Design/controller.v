@@ -49,9 +49,98 @@ module controller #(parameter W=32)
             state_number = 0;
         end
 
+    always @(posedge clk)
+        begin
+            case (state_number)
+                4'd0: // FETCH CYCLE --> PC IS ALREADY AT PC REGISTER
+                    begin   
+                        state_number <= 1;
+                    end
+                4'd1:  // DECODE CYCLE --> PC IS ALREADY AT PC REGISTER
+                    begin
+                        if (Op == 2'b00) // Data Processing instruction
+                            begin
+                                if (Func[5] == 1) // Data processing with immediate
+                                    begin
+                                        state_number <= 7;
+                                    end
+                                else if ( (Func[5] == 0) && (Func[4:1] != 4'b1001) && ({Func[0], inst_19_to_4_BX} != 17'h0FFF1)) // Data processing with register
+                                    begin
+                                        state_number <= 6;
+                                    end
+                                else if ( (Func[5] == 0) && (Func[4:1] == 4'b1001) && ({Func[0], inst_19_to_4_BX} == 17'h0FFF1)) // BX instruction
+                                    begin
+                                        state_number <= 10;
+                                    end
+                            end
+                        else if (Op == 2'b01) // LDR or STR instruction
+                            begin
+                                if (Func[5] == 0 && Func[0] == 1) // Func_t0 == 1 --> LDR with imm
+                                    begin
+                                        state_number <= 6;
+                                    end
+                                else if (Func[5] == 0 && Func[0] == 0) // Func_t0 == 0 --> STR with imm
+                                    begin
+                                        state_number <= 6;
+                                    end
+                            end
+                        else if (Op == 2'b10) // Branch instruction
+                            begin
+                                state_number <= 9;
+                            end
+                    end
+                4'd2:
+                    begin
+                        if (Func[0] == 1) // LDR
+                            begin
+                                state_number <= 3;
+                            end
+                        else if (Func[0] == 0) // STR
+                            begin
+                                state_number <= 5;
+                            end
+                    end
+                4'd3: // MemRead
+                    begin
+                        state_number <= 4;
+                    end
+                4'd4: // MemWB
+                    begin
+                        state_number <= 0;
+                    end
+                4'd5: // MemWrite
+                    begin
+                        state_number <= 0;
+                    end
+                4'd6: // Data processing with Register ExecuteR
+                    begin   
+                        state_number <= 8;
+                    end
+                4'd7: // Data processing with Immediate ExecuteL
+                    begin
+                        state_number <= 8;
+                    end
+                4'd8: // ALUWB
+                    begin
+                        state_number <= 0;
+                    end
+                4'd9: // Branch
+                    begin
+                        state_number <= 0;
+                        // BRANCH SIGNAL
+                    end
+                4'd10: // BX
+                    begin
+                        state_number <= 0;
+                    end
+                default:
+					state_number <= 0;
+            endcase
+
+        end
 
 
-    always @(posedge clk) 
+    always @(*) 
         begin
             C_flag_reg_out = CV_flags_reg_out[1];
             case (state_number)
@@ -70,7 +159,6 @@ module controller #(parameter W=32)
                         AluControl <= 4'b0100; // Add
                         write_enable_NZ <= 0; // Do not Modify NZ flags
                         write_enable_CV <= 0; // Do not  Modify CV flags
-                        state_number <= 1;
                     end
                 4'd1:  // DECODE CYCLE --> PC IS ALREADY AT PC REGISTER
                     begin
@@ -92,19 +180,16 @@ module controller #(parameter W=32)
                                     begin
                                         RegSrc <= 2'bx0;
                                         ImmSrc <= 2'b00; // imm8
-                                        state_number <= 7;
                                     end
                                 else if ( (Func[5] == 0) && (Func[4:1] != 4'b1001) && ({Func[0], inst_19_to_4_BX} != 17'h0FFF1)) // Data processing with register
                                     begin
                                         RegSrc <= 2'b00;
                                         ImmSrc <= 2'b00; // imm8
-                                        state_number <= 6;
                                     end
                                 else if ( (Func[5] == 0) && (Func[4:1] == 4'b1001) && ({Func[0], inst_19_to_4_BX} == 17'h0FFF1)) // BX instruction
                                     begin
                                         RegSrc <= 2'b0x;
                                         ImmSrc <= 2'bxx; // imm8
-                                        state_number <= 10;
                                     end
                             end
                         else if (Op == 2'b01) // LDR or STR instruction
@@ -113,20 +198,17 @@ module controller #(parameter W=32)
                                     begin
                                         RegSrc <= 2'bx0;
                                         ImmSrc <= 2'b01; // imm12
-                                        state_number <= 6;
                                     end
                                 else if (Func[5] == 0 && Func[0] == 0) // Func_t0 == 0 --> STR with imm
                                     begin
                                         RegSrc <= 2'b10;
                                         ImmSrc <= 2'b01; // imm12
-                                        state_number <= 6;
                                     end
                             end
                         else if (Op == 2'b10) // Branch instruction
                             begin
                                 RegSrc <= 2'bx1;
                                 ImmSrc <= 2'b10; // imm24
-                                state_number <= 9;
                             end
                     end
                 4'd2:
@@ -136,34 +218,22 @@ module controller #(parameter W=32)
                         AluControl <= 4'b0100; // Add
                         write_enable_NZ <= 0; // Do not Modify NZ flags
                         write_enable_CV <= 0; // Do not  Modify CV flags
-
-                        if (Func[0] == 1) // LDR
-                            begin
-                                state_number <= 3;
-                            end
-                        else if (Func[0] == 0) // STR
-                            begin
-                                state_number <= 5;
-                            end
                     end
                 4'd3: // MemRead
                     begin
                         ResultSrc <= 2'b00;
                         AdrSrc  <= 1'b1; // 1 bit
-                        state_number <= 4;
                     end
                 4'd4: // MemWB
                     begin
                         ResultSrc <= 2'b01;
                         RegWrite <= (1'b1 && CondEx);
-                        state_number <= 0;
                     end
                 4'd5: // MemWrite
                     begin
                         ResultSrc <= 2'b00;
                         AdrSrc  <= 1'b1; // 1 bit
                         MemWrite <= 1'b1;
-                        state_number <= 0;
                     end
                 4'd6: // Data processing with Register ExecuteR
                     begin   
@@ -186,8 +256,6 @@ module controller #(parameter W=32)
                                 write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
                                 write_enable_CV <= ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
                             end
-
-                        state_number <= 8;
                     end
                 4'd7: // Data processing with Immediate ExecuteL
                     begin
@@ -210,14 +278,11 @@ module controller #(parameter W=32)
                                 write_enable_NZ <= ((Func[0] ? 1 : 0) && CondEx); // Modify NZ flags
                                 write_enable_CV <= ((Func[0] ? 1 : 0) && CondEx); // Modify CV flags
                             end
-
-                        state_number <= 8;
                     end
                 4'd8: // ALUWB
                     begin
                         ResultSrc <= 2'b00;
                         RegWrite <= (1'b1 && CondEx);
-                        state_number <= 0;
                     end
                 4'd9: // Branch
                     begin
