@@ -94,6 +94,13 @@ applicable agreement for further details.
 		(line (pt 0 176)(pt 16 176)(line_width 1))
 	)
 	(port
+		(pt 0 192)
+		(input)
+		(text "reset" (rect 0 0 20 12)(font "Arial" ))
+		(text "reset" (rect 21 187 41 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 1))
+	)
+	(port
 		(pt 280 32)
 		(output)
 		(text "PCWrite" (rect 0 0 35 12)(font "Arial" ))
