@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1683666820" />
+    <testcase name="controller" classname="controller" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_3_Modules_Cocotb_Test\ControllerTest\tests\controller.py" lineno="15" time="0.0010018348693847656" sim_time_ns="18000" ratio_time="17967032.841504045" />
+  </testsuite>
+</testsuites>
