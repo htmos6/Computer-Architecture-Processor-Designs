@@ -47,7 +47,7 @@ module controller #(parameter W=32)
 
     initial 
         begin
-            state_number = 0;
+            state_number = 11;
             CondEx = 1;
         end
     
@@ -133,6 +133,10 @@ module controller #(parameter W=32)
                         // BRANCH SIGNAL
                     end
                 4'd10: // BX
+                    begin
+                        state_number <= 0;
+                    end
+                4'd11: // BX
                     begin
                         state_number <= 0;
                     end
