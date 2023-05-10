@@ -168,8 +168,6 @@ async def data_path_3(dut):
     assert dut.SYNTHESIZED_WIRE_48.value == 1 # 4to1 mux out write data
 
     await clkedge
-
-
     await clkedge #13
     await Timer(2, units="us")  # MOV R1, #5
     assert dut.SYNTHESIZED_WIRE_51.value == 0xE0833007 # PC'
@@ -197,44 +195,20 @@ async def data_path_3(dut):
     await clkedge
 
 
-
     await clkedge
     await clkedge
     await clkedge #16
     await clkedge
+
     await Timer(2, units="us")  # MOV R1, #5
     assert dut.SYNTHESIZED_WIRE_48.value == 0xF9 # Write data for regisetr file 2's complement of R7
+
     await clkedge
     await Timer(2, units="us")  # MOV R1, #5
     assert dut.SYNTHESIZED_WIRE_48.value == 0xF9 # Write data for regisetr file 2's complement of R7
+
     await clkedge
     await Timer(2, units="us")  # MOV R1, #5
     assert dut.SYNTHESIZED_WIRE_48.value == 0xF9 # Write data for regisetr file 2's complement of R7
     await clkedge # 20
-
-    
-
-
-
-  
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
 
