@@ -38,8 +38,8 @@ module controller #(parameter W=32)
     wire [1:0] NZ_flags_reg_out;
     wire [1:0] CV_flags_reg_out;
 
-    reg [0:0] CondEx;
-    // assign CondEx = ((Cond == 4'b1110) || (Cond == 4'b0000 && NZ_flags_reg_out[0] == 1'b1) || (Cond == 4'b0001 &&  NZ_flags_reg_out[0] == 1'b0));
+    wire [0:0] CondEx;
+    assign CondEx = ((Cond == 4'b1110) || (Cond == 4'b0000 && NZ_flags_reg_out[0] == 1'b1) || (Cond == 4'b0001 &&  NZ_flags_reg_out[0] == 1'b0));
     // assign CondEx = 1;
 
     register_synchronous_reset_write_en #(.W(2)) NZ_Flags_Reg (.clk(clk), .write_enable(write_enable_NZ), .reset_synchronous(0), .inp_reg( {negative_flag, zero_flag} ), .out_reg(NZ_flags_reg_out));
@@ -47,8 +47,8 @@ module controller #(parameter W=32)
 
     initial 
         begin
-            state_number = 0;
-            CondEx = 1;
+            state_number = 11;
+            //CondEx = 1;
         end
     
 
@@ -133,6 +133,10 @@ module controller #(parameter W=32)
                         // BRANCH SIGNAL
                     end
                 4'd10: // BX
+                    begin
+                        state_number <= 0;
+                    end
+                4'd11: // BX
                     begin
                         state_number <= 0;
                     end
