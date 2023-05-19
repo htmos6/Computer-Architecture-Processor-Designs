@@ -1,4 +1,4 @@
-module memory#(BYTE_SIZE=4, ADDR_WIDTH=32)(
+module memory #(BYTE_SIZE=4, ADDR_WIDTH=32)(
 input clk,WE,
 input [ADDR_WIDTH-1:0] ADDR,
 input [(BYTE_SIZE*8)-1:0] WD,
