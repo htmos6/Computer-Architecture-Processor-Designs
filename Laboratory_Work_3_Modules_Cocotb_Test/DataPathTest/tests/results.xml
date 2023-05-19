@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1683675090" />
+    <testcase name="data_path_3" classname="data_path_3" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_3_Modules_Cocotb_Test\DataPathTest\tests\data_path_3.py" lineno="15" time="0.004943370819091797" sim_time_ns="138000" ratio_time="27916174.013697308">
+      <failure />
+    </testcase>
+  </testsuite>
+</testsuites>
