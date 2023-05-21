@@ -34,6 +34,7 @@ async def controller(dut):
     assert dut.RESET_OUT.value == 0
 
 
+    # SUB R3, R3, R1
     dut.RESET.value = 0
     dut.Op.value = 0
     dut.Func.value = 4
@@ -48,6 +49,6 @@ async def controller(dut):
     assert dut.MemtoRegD.value == 0
     assert dut.AluControlD.value == 0b0010
     assert dut.AluSrcD.value == 0
-    assert dut.FlagWriteD.value == 0b10
+    assert dut.FlagWriteD.value == 0b11
     assert dut.RESET_OUT.value == 0
 
