@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1684707475" />
+    <testcase name="condition_check" classname="condition_check" file="C:\Users\Legion\Desktop\Quartus\EE446-LABORATORY\Computer-Architecture-Verilog\Laboratory_Work_4_Modules_Cocotb_Test\ConditionCheckTest\tests\condition_check.py" lineno="15" time="0.0009970664978027344" sim_time_ns="5000" ratio_time="5014710.664753706" />
+  </testsuite>
+</testsuites>
