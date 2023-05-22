@@ -30,13 +30,18 @@ module controller #(parameter W=32)
         begin 
             if (RESET == 1) 
                 begin 
-                    RESET_OUT = 1'b1;
+                    PCSrcD = 1'b0;
+                    BranchD = 1'b0;
+                    RegWriteD = 1'b0;
+                    MemWriteD = 1'b0;
+                    MemtoRegD = 1'b0;
+                    AluControlD = Func[4:1];
+                    AluSrcD = 1'b0;
+                    FlagWriteD = 2'b00;
+                    ImmSrcD = 2'b00;
+                    RegSrcD = 2'b00;
                 end
-            if (RESET == 0) 
-                begin 
-                    RESET_OUT = 1'b0;
-                end
-            if (Op == 2'b00) // Data processing instruction
+            else if (Op == 2'b00) // Data processing instruction
                 begin
                     if (Func[5] == 1) // Data processing with immediate
                         begin
