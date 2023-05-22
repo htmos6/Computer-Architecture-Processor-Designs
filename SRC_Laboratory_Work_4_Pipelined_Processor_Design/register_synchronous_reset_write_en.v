@@ -12,7 +12,7 @@ module register_synchronous_reset_write_en #(parameter W = 32)
 			out_reg = 0;
 		end
 	
-	always @(posedge clk) // Sequential Circuit
+	always @(negedge clk) // Sequential Circuit
 		begin
 			if (reset_synchronous == 1)
 				out_reg <= 0; // Reset at the next clock cycle
