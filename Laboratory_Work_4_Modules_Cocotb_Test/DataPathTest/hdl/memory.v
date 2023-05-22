@@ -12,7 +12,7 @@ initial begin
 //mem[1]<=8'h02;
 //mem[2]<=8'h03;
 //mem[3]<=8'h04;
-$readmemh("mem_data.txt",mem);
+$readmemh("C:/Users/Legion/Desktop/Quartus/EE446-LABORATORY/Computer-Architecture-Verilog/Laboratory_Work_4_Modules_Cocotb_Test/DataPathTest/hdl/mem_data.txt",mem);
 end
 genvar i;
 generate
