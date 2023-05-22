@@ -28,20 +28,7 @@ module controller #(parameter W=32)
     
     always  @(*) 
         begin 
-            if (RESET == 1) 
-                begin 
-                    PCSrcD = 1'b0;
-                    BranchD = 1'b0;
-                    RegWriteD = 1'b0;
-                    MemWriteD = 1'b0;
-                    MemtoRegD = 1'b0;
-                    AluControlD = Func[4:1];
-                    AluSrcD = 1'b0;
-                    FlagWriteD = 2'b00;
-                    ImmSrcD = 2'b00;
-                    RegSrcD = 2'b00;
-                end
-            else if (Op == 2'b00) // Data processing instruction
+            if (Op == 2'b00) // Data processing instruction
                 begin
                     if (Func[5] == 1) // Data processing with immediate
                         begin
@@ -96,7 +83,7 @@ module controller #(parameter W=32)
                                     MemtoRegD = 1'b0;
                                     AluControlD = Func[4:1];
                                     AluSrcD = 1'b0;
-                                    FlagWriteD = 2'b10;
+                                    FlagWriteD = 2'b11;
                                     ImmSrcD = 2'bxx;
                                     RegSrcD = 2'b00;
                                 end
@@ -109,7 +96,7 @@ module controller #(parameter W=32)
                                     MemtoRegD = 1'b0;
                                     AluControlD = Func[4:1];
                                     AluSrcD = 1'b0;
-                                    FlagWriteD = 2'b11;
+                                    FlagWriteD = 2'b10;
                                     ImmSrcD = 2'bxx;
                                     RegSrcD = 2'b00;
                                 end

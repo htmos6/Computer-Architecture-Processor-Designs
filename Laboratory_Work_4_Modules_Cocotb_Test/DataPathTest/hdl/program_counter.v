@@ -1,7 +1,6 @@
-module register_synchronous_reset_write_en #(parameter W = 32) 
+module program_counter #(parameter W = 32)
 	(
 	input clk, 
-	input write_enable,
 	input reset_synchronous, // Reset == 1 --> Clear Register Content @ Next Rising Edge
 	input [W-1:0] inp_reg, 
 	output reg [W-1:0] out_reg
@@ -9,16 +8,15 @@ module register_synchronous_reset_write_en #(parameter W = 32)
 
 	initial 
 		begin
-			out_reg = 0;
+			out_reg <= 0; // Reset at the next clock cycle
 		end
-	
-	always @(negedge clk) // Sequential Circuit
+
+	always @(posedge clk) 
 		begin
-			if (reset_synchronous == 1)
+			if (reset_synchronous == 1) // Clear output @ next edge
 				out_reg <= 0; // Reset at the next clock cycle
-			else if (reset_synchronous == 0 && write_enable == 1)
+			else if (reset_synchronous == 0)
 				out_reg <= inp_reg; // Load output at the next clock cycle with parallel input
 		end
-	
 endmodule
-
+	
